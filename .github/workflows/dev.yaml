@@ -1,0 +1,23 @@
+name: Build Debug Binaries
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --verbose
+
+      - name: Archive build result
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug
+          path: target/**/debug/*
